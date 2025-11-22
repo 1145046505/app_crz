@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -64,9 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: width,
                       height: width,
                       decoration: BoxDecoration(
-                        color: _isPressing1
-                            ? Colors.deepPurple[900]
-                            : Colors.deepPurple[600],
+                        color: _isPressing1 ? Colors.deepPurple[900] : Colors.deepPurple[600],
                         borderRadius: BorderRadius.circular(width),
                         boxShadow: [
                           BoxShadow(
@@ -82,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icon(
                             Icons.meeting_room,
                             color: Colors.white,
-                            size: 24,
+                            size: 32,
                           ),
                           SizedBox(width: 4),
                           Text(
@@ -122,8 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: width,
                       height: width,
                       decoration: BoxDecoration(
-                        color:
-                            _isPressing2 ? Colors.blue[600] : Colors.blue[400],
+                        color: _isPressing2 ? Colors.blue[600] : Colors.blue[400],
                         borderRadius: BorderRadius.circular(width),
                         boxShadow: [
                           BoxShadow(
@@ -140,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icon(
                             Icons.check_circle,
                             color: Colors.white,
-                            size: 24,
+                            size: 32,
                           ),
                           SizedBox(width: 4),
                           Text(
