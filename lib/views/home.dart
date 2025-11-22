@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -46,6 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         _isPressing1 = true;
                       });
+                      toastification.show(
+                        alignment: Alignment.topCenter,
+                        style: ToastificationStyle.flatColored,
+                        title: Text('切换至会议模式'),
+                        autoCloseDuration: const Duration(seconds: 5),
+                      );
                     },
                     onTapUp: (val) {
                       setState(() {
@@ -102,6 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         _isPressing2 = true;
                       });
+                      toastification.show(
+                        alignment: Alignment.topCenter,
+                        style: ToastificationStyle.flatColored,
+                        title: Text('切换至空闲模式'),
+                        autoCloseDuration: const Duration(seconds: 5),
+                      );
                     },
                     onTapUp: (val) {
                       setState(() {
