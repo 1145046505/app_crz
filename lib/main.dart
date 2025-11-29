@@ -2,10 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/core/storage_manager.dart';
 
 import 'app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 应用全屏、隐藏顶部栏和底部栏
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -26,6 +27,8 @@ void main() {
     // 返回 true 表示异常已处理
     return true;
   };
+
+  await StorageManager().init();
 
   runApp(const MyApp());
 }

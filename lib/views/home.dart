@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:toastification/toastification.dart';
+import 'package:my_app/enum/meeting_mode_enum.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,12 +14,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isPressing1 = false;
-  bool _isPressing2 = false;
+  MeetingMode currentMode = MeetingMode.free;
+
+  @override
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
-    const width = 150.0;
+    final buttonWidth = 150.0.w;
+    final selectedColor = Color.fromARGB(180, 30, 136, 229);
+    final unSelectedColor = Color.fromARGB(66, 238, 238, 238);
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -38,132 +44,94 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Center(
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // 会议按钮
-                  GestureDetector(
-                    onTapDown: (val) {
-                      setState(() {
-                        _isPressing1 = true;
-                      });
-                      toastification.show(
-                        alignment: Alignment.topCenter,
-                        style: ToastificationStyle.flatColored,
-                        title: Text('切换至会议模式'),
-                        autoCloseDuration: const Duration(seconds: 5),
-                      );
-                    },
-                    onTapUp: (val) {
-                      setState(() {
-                        _isPressing1 = false;
-                      });
-                    },
-                    onTapCancel: () {
-                      setState(() {
-                        _isPressing1 = false;
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      width: width,
-                      height: width,
-                      decoration: BoxDecoration(
-                        color: _isPressing1 ? Colors.deepPurple[900] : Colors.deepPurple[600],
-                        borderRadius: BorderRadius.circular(width),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 10,
-                            offset: Offset(0, 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MaterialButton(
+                        onPressed: () {
+                          toggleMode(MeetingMode.meeting);
+                        },
+                        color: currentMode == MeetingMode.meeting
+                            ? selectedColor
+                            : unSelectedColor,
+                        padding: EdgeInsets.all(0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(buttonWidth),
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.meeting_room,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            "会议",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                        ),
+                        child: SizedBox(
+                          width: buttonWidth,
+                          height: buttonWidth,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.computer,
+                                  color: Colors.white,
+                                  size: 44.sp,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  MeetingMode.meeting.name,
+                                  style: TextStyle(
+                                    fontSize: 22.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 100),
-
-                  GestureDetector(
-                    onTapDown: (val) {
-                      setState(() {
-                        _isPressing2 = true;
-                      });
-                      toastification.show(
-                        alignment: Alignment.topCenter,
-                        style: ToastificationStyle.flatColored,
-                        title: Text('切换至空闲模式'),
-                        autoCloseDuration: const Duration(seconds: 5),
-                      );
-                    },
-                    onTapUp: (val) {
-                      setState(() {
-                        _isPressing2 = false;
-                      });
-                    },
-                    onTapCancel: () {
-                      setState(() {
-                        _isPressing2 = false;
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      width: width,
-                      height: width,
-                      decoration: BoxDecoration(
-                        color: _isPressing2 ? Colors.blue[600] : Colors.blue[400],
-                        borderRadius: BorderRadius.circular(width),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 10,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 100.w,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.white,
-                            size: 32,
+                      MaterialButton(
+                        hoverElevation: 5,
+                        onPressed: () {
+                          toggleMode(MeetingMode.free);
+                        },
+                        color: currentMode == MeetingMode.free
+                            ? selectedColor
+                            : unSelectedColor,
+                        padding: EdgeInsets.all(0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(buttonWidth),
                           ),
-                          SizedBox(width: 4),
-                          Text(
-                            "空闲",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                        ),
+                        child: SizedBox(
+                          width: buttonWidth,
+                          height: buttonWidth,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.free_breakfast_outlined,
+                                  color: Colors.white,
+                                  size: 44.sp,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  MeetingMode.free.name,
+                                  style: TextStyle(
+                                    fontSize: 22.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -171,5 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void toggleMode(MeetingMode mode) {
+    print("change mode : $mode");
+    setState(() {
+      currentMode = mode;
+    });
   }
 }
